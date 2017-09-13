@@ -1,0 +1,93 @@
+<!doctype html>
+<html class="no-js" lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Calculator w/ Foundation CSS</title>
+    <link rel="stylesheet" href="css/foundation.css">
+    <link rel="stylesheet" href="css/app.css">
+    <link href="https://fonts.googleapis.com/css?family=Dosis" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://use.fontawesome.com/14c79cd15d.js"></script>
+    <script src="js/calculator.js"></script>
+  </head>
+  <style>
+   html{font-size: 20px;}
+   body {font-family: 'Dosis'; font-weight: normal;}
+   .button{
+     margin: 0!important;
+     padding: 20px;
+     border-top: 1px solid #0AF;
+     border-left: 1px solid #0AF;
+   }
+   .skin .grid-x:last-child .button{border-bottom: 1px solid #0AF;}
+   .skin .grid-x .button:last-child{border-right: 1px solid #0AF;}
+   .callout{padding: 8px;}
+   .grid-container{font-weight: normal;}
+   .skin{background-color: black; padding: 10px;}
+   #calculations{font-size: 1em; padding: 0 5px; height: 1em;}
+   #display{font-size: 2.5em; padding: 0 5px; margin: 0;}
+  </style>
+  <body>
+
+    <div class="grid-container">
+      <div class="grid-x">
+        <div class="large-4 large-offset-4 medium-4 medium-offset-4 small-12 callout skin">
+          <div class="grid-x">
+            <div class="cell callout register">
+              <div class="grid-x">
+                <div class="small-1" id="memory-stack">M</div>
+                <div class="small-11 text-right" id="calculations"></div>
+              </div>
+              <div class="grid-x">
+                <div class="cell text-right" id="display"></div>
+              </div>
+            </div>
+          </div>
+          <div class="grid-x">
+            <div class="large-3 medium-3 small-3 button alert" id="c">C/CE</div>
+            <div class="large-3 medium-3 small-3 button warning" id="mplus">M+</div>
+            <div class="large-3 medium-3 small-3 button warning" id="mr">MR</div>
+            <div class="large-3 medium-3 small-3 button warning" id="mc">MC</div>
+          </div>
+          <div class="grid-x">
+            <div class="large-3 medium-3 small-3 button alert" id="del"><i class="fa fa-arrow-left" aria-hidden="true"></i></div>
+            <div class="large-3 medium-3 small-3 button secondary" id="p-left">(</div>
+            <div class="large-3 medium-3 small-3 button secondary" id="p-right">)</div>
+            <div class="large-3 medium-3 small-3 button secondary" id="button-divide">/</div>
+          </div>
+          <div class="grid-x">
+            <div class="large-3 medium-3 small-3 button primary" id="button-7">7</div>
+            <div class="large-3 medium-3 small-3 button primary" id="button-8">8</div>
+            <div class="large-3 medium-3 small-3 button primary" id="button-9">9</div>
+            <div class="large-3 medium-3 small-3 button secondary" id="button-multiply">*</div>
+          </div>
+          <div class="grid-x">
+            <div class="large-3 medium-3 small-3 button primary" id="button-4">4</div>
+            <div class="large-3 medium-3 small-3 button primary" id="button-5">5</div>
+            <div class="large-3 medium-3 small-3 button primary" id="button-6">6</div>
+            <div class="large-3 medium-3 small-3 button secondary" id="button-minus">-</div>
+          </div>
+          <div class="grid-x">
+            <div class="large-3 medium-3 small-3 button primary" id="button-1">1</div>
+            <div class="large-3 medium-3 small-3 button primary" id="button-2">2</div>
+            <div class="large-3 medium-3 small-3 button primary" id="button-3">3</div>
+            <div class="large-3 medium-3 small-3 button secondary" id="button-plus">+</div>
+          </div>
+          <div class="grid-x">
+            <div class="large-3 medium-3 small-3 button secondary" id="button-plusminus">+/-</div>
+            <div class="large-3 medium-3 small-3 button primary" id="button-0">0</div>
+            <div class="large-3 medium-3 small-3 button secondary" id="button-dot">.</div>
+            <div class="large-3 medium-3 small-3 button secondary" id="button-equal">=</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/vendor/jquery.js"></script>
+    <script src="js/vendor/what-input.js"></script>
+    <script src="js/vendor/foundation.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>
