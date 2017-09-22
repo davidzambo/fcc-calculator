@@ -7,38 +7,78 @@
     <title>JavaScript Calculator w/ Foundation CSS</title>
     <link rel="stylesheet" href="css/foundation.css">
     <link rel="stylesheet" href="css/app.css">
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Dosis" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://use.fontawesome.com/14c79cd15d.js"></script>
-    <script src="js/calculator.js"></script>
   </head>
   <style>
-   html{font-size: 20px;}
-   body {font-family: 'Dosis'; font-weight: normal;}
-   .button{
-     margin: 0!important;
-     padding: 20px;
-     border-top: 1px solid #0AF;
-     border-left: 1px solid #0AF;
+  @media (max-width: 639px){
+    body{
+      background-color: black!important;
+      background-image: none!important;}
+   .skin{
+     margin-top: 0!important;
+     border-radius: 0!important;
+     min-height: 100%!important;
+     max-height: 100%!important;
+     box-shadow: none!important;
    }
-   .skin .grid-x:last-child .button{border-bottom: 1px solid #0AF;}
-   .skin .grid-x .button:last-child{border-right: 1px solid #0AF;}
-   .callout{padding: 8px;}
-   .grid-container{font-weight: normal;}
-   .skin{background-color: black; padding: 10px;}
-   #calculations{font-size: 1em; padding: 0 5px; height: 1em;}
-   #display{font-size: 2.5em; padding: 0 5px; margin: 0;}
+   .grid-container{padding:0;}
+   .button{padding: 4vh 7vw!important;}
+  }
+  @media (min-width: 100px){
+    html{font-size: 20px;height: 100%;}
+    body {
+      font-family: 'Inconsolata';
+      font-weight: normal;
+      background-image: url(images/desktop.jpg);
+      background-position: top;
+      background-size:cover;
+      background-repeat: no-repeat;
+    }
+    .button{
+      margin: 0!important;
+      padding: 20px;
+      border-top: 1px solid #333;
+      border-left: 1px solid #333;
+    }
+    .skin .grid-x:last-child .button{border-bottom: 1px solid #333;}
+    .skin .grid-x .button:last-child{border-right: 1px solid #333;}
+    .callout{padding: 0 8px 8px 8px;}
+    .grid-container{font-weight: normal;}
+    .skin{
+      background-color: black;
+      padding: 0 10px 10px 10px;
+      margin: auto;
+      margin-top: 100px;
+      border-radius: 10px;
+      box-shadow: 5px 5px 2px #111 ;
+    }
+    #memory-stack, #history, #showHistory{font-size: 0.8em; padding: 5px; height: 1em;}
+    #history{display:none;}
+    #display{font-size: 1.2em; padding: 0.4em 5px 0 5px; margin: 0; overflow: auto;}
+    img{height: 15px;}
+    .logo{text-align: right;}
+
+  }
   </style>
-  <body>
+  <body onLoad="clearDisplay()">
 
     <div class="grid-container">
       <div class="grid-x">
-        <div class="large-4 large-offset-4 medium-4 medium-offset-4 small-12 callout skin">
+        <div class="large-3 medium-4 medium-offset-4 small-12 callout skin">
           <div class="grid-x">
+            <div class="cell text-right">
+              <a href="http://www.dcmf.hu" target="_blank">
+                <img src="images/dcmf-letters.png" alt="David's Code ManuFactory logo">
+              </a>
+            </div>
             <div class="cell callout register">
               <div class="grid-x">
-                <div class="small-1" id="memory-stack">M</div>
-                <div class="small-11 text-right" id="calculations"></div>
+                <div class="small-1" id="memory-stack"></div>
+                <div class="small-11 text-right" id="history"></div>
+                <div class="small-11 text-right" id="showHistory"></div>
               </div>
               <div class="grid-x">
                 <div class="cell text-right" id="display"></div>
@@ -46,40 +86,40 @@
             </div>
           </div>
           <div class="grid-x">
-            <div class="large-3 medium-3 small-3 button alert" id="c">C/CE</div>
-            <div class="large-3 medium-3 small-3 button warning" id="mplus">M+</div>
-            <div class="large-3 medium-3 small-3 button warning" id="mr">MR</div>
-            <div class="large-3 medium-3 small-3 button warning" id="mc">MC</div>
+            <div class="large-3 medium-3 small-3 button alert" id="c" onClick="clearHistory()">C/CE</div>
+            <div class="large-3 medium-3 small-3 button warning" id="mplus" onClick="memoryPlus()">M+</div>
+            <div class="large-3 medium-3 small-3 button warning" id="mr" onClick="memoryRecall()">MR</div>
+            <div class="large-3 medium-3 small-3 button warning" id="mc" onClick="eraseMemory()">MC</div>
           </div>
           <div class="grid-x">
-            <div class="large-3 medium-3 small-3 button alert" id="del"><i class="fa fa-arrow-left" aria-hidden="true"></i></div>
-            <div class="large-3 medium-3 small-3 button secondary" id="p-left">(</div>
-            <div class="large-3 medium-3 small-3 button secondary" id="p-right">)</div>
-            <div class="large-3 medium-3 small-3 button secondary" id="button-divide">/</div>
+            <div class="large-3 medium-3 small-3 button alert" id="del" onClick="deleteLastNumber()"><i class="fa fa-arrow-left" aria-hidden="true"></i></div>
+            <div class="large-3 medium-3 small-3 button secondary" id="p-left" onClick="startParenthesis()">(</div>
+            <div class="large-3 medium-3 small-3 button secondary" id="p-right" onClick="closeParenthesis()">)</div>
+            <div class="large-3 medium-3 small-3 button secondary" id="button-divide" onClick="addOperand(this.textContent)">/</div>
           </div>
           <div class="grid-x">
-            <div class="large-3 medium-3 small-3 button primary" id="button-7">7</div>
-            <div class="large-3 medium-3 small-3 button primary" id="button-8">8</div>
-            <div class="large-3 medium-3 small-3 button primary" id="button-9">9</div>
-            <div class="large-3 medium-3 small-3 button secondary" id="button-multiply">*</div>
+            <div class="large-3 medium-3 small-3 button primary" id="button-7" onClick="addNumber(this.textContent)">7</div>
+            <div class="large-3 medium-3 small-3 button primary" id="button-8" onClick="addNumber(this.textContent)">8</div>
+            <div class="large-3 medium-3 small-3 button primary" id="button-9" onClick="addNumber(this.textContent)">9</div>
+            <div class="large-3 medium-3 small-3 button secondary" id="button-multiply" onClick="addOperand(this.textContent)">*</div>
           </div>
           <div class="grid-x">
-            <div class="large-3 medium-3 small-3 button primary" id="button-4">4</div>
-            <div class="large-3 medium-3 small-3 button primary" id="button-5">5</div>
-            <div class="large-3 medium-3 small-3 button primary" id="button-6">6</div>
-            <div class="large-3 medium-3 small-3 button secondary" id="button-minus">-</div>
+            <div class="large-3 medium-3 small-3 button primary" id="button-4" onClick="addNumber(this.textContent)">4</div>
+            <div class="large-3 medium-3 small-3 button primary" id="button-5" onClick="addNumber(this.textContent)">5</div>
+            <div class="large-3 medium-3 small-3 button primary" id="button-6" onClick="addNumber(this.textContent)">6</div>
+            <div class="large-3 medium-3 small-3 button secondary" id="button-minus" onClick="addOperand(this.textContent)">-</div>
           </div>
           <div class="grid-x">
-            <div class="large-3 medium-3 small-3 button primary" id="button-1">1</div>
-            <div class="large-3 medium-3 small-3 button primary" id="button-2">2</div>
-            <div class="large-3 medium-3 small-3 button primary" id="button-3">3</div>
-            <div class="large-3 medium-3 small-3 button secondary" id="button-plus">+</div>
+            <div class="large-3 medium-3 small-3 button primary" id="button-1" onClick="addNumber(this.textContent)">1</div>
+            <div class="large-3 medium-3 small-3 button primary" id="button-2" onClick="addNumber(this.textContent)">2</div>
+            <div class="large-3 medium-3 small-3 button primary" id="button-3" onClick="addNumber(this.textContent)">3</div>
+            <div class="large-3 medium-3 small-3 button secondary" id="button-plus" onClick="addOperand(this.textContent)">+</div>
           </div>
           <div class="grid-x">
-            <div class="large-3 medium-3 small-3 button secondary" id="button-plusminus">+/-</div>
-            <div class="large-3 medium-3 small-3 button primary" id="button-0">0</div>
-            <div class="large-3 medium-3 small-3 button secondary" id="button-dot">.</div>
-            <div class="large-3 medium-3 small-3 button secondary" id="button-equal">=</div>
+            <div class="large-3 medium-3 small-3 button secondary" id="button-plusminus" onClick="plusMinus()">+/-</div>
+            <div class="large-3 medium-3 small-3 button primary" id="button-0" onClick="addNumber(this.textContent)">0</div>
+            <div class="large-3 medium-3 small-3 button secondary" id="button-dot" onClick="addDot()">.</div>
+            <div class="large-3 medium-3 small-3 button secondary" id="button-equal" onClick="calculate()">=</div>
           </div>
         </div>
       </div>
@@ -89,5 +129,6 @@
     <script src="js/vendor/what-input.js"></script>
     <script src="js/vendor/foundation.js"></script>
     <script src="js/app.js"></script>
+    <script src="js/calculator.js"></script>
   </body>
 </html>
